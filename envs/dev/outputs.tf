@@ -26,3 +26,15 @@ output "private_subnet_cidrs" {
   description = "CIDRs of private subnets"
   value       = module.vpc.private_subnet_cidrs
 }
+
+output "webserver_instance_id" {
+  value = module.webserver.instance_id
+}
+
+output "webserver_instance_public_ip" {
+  value = module.webserver.instance_public_ip
+}
+
+output "webserver_instance_public_dns" {
+  value = module.webserver.instance_public_dns
+}

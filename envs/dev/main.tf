@@ -14,6 +14,7 @@ provider "aws" {
   region = "us-east-1"
 }
 
+# --- módulo VPC ---
 module "vpc" {
   source = "../../modules/vpc"
 
@@ -27,4 +28,23 @@ module "vpc" {
     Environment = "dev"
     Owner       = "Romulo"
   }
+}
+
+# --- módulo Security Groups---
+module "security" {
+  source           = "../../modules/security"
+  vpc_id           = module.vpc.vpc_id
+  vpc_cidr_block   = module.vpc.vpc_cidr_block
+}
+
+# --- módulo Webserver ---
+module "webserver" {
+  source = "../../modules/webserver"
+
+  subnet_id         = module.vpc.public_subnet_ids[0]
+  key_name          = var.key_name
+  security_group_ids = [
+    module.security.web_sg_id,
+    module.security.internal_sg_id
+  ]
 }
