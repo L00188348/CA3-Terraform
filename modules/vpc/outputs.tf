@@ -37,3 +37,7 @@ output "private_subnet_azs" {
   description = "Lista de AZs usadas nas subnets privadas"
   value       = aws_subnet.private[*].availability_zone
 }
+output "vpc_cidr_block" {
+  description = "CIDR da VPC"
+  value       = aws_vpc.this.cidr_block
+}

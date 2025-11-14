@@ -3,12 +3,15 @@
 *.tfstate                  # State files
 *.tfstate.backup           # State backup files
 *.tfvars                   # Sensitive variables
+*.tfstate.*
+tfplan                     # Terraform plan files
 crash.log                  # Terraform crash logs
 override.tf                # Local override files
 override.tf.json           # Local override files in JSON
 *_override.tf              # Local override files
 *_override.tf.json         # Local override files in JSON
 .terraform.lock.hcl        # Lock file
+*.log
 
 # Keys and credentials
 *.pem                      # Private keys
