@@ -12,6 +12,9 @@ override.tf.json           # Local override files in JSON
 *_override.tf.json         # Local override files in JSON
 .terraform.lock.hcl        # Lock file
 *.log
+**/.terraform/providers/**/*  # Bloqueia providers em qualquer subpasta
+.envs/dev/                   # Bloqueia pasta envs/dev/ se for local
+.envs/prod/                  # Bloqueia pasta envs/prod/ se for local
 
 # Keys and credentials
 *.pem                      # Private keys
