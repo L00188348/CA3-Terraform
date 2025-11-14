@@ -29,6 +29,23 @@ resource "aws_security_group" "internal_sg" {
     var.vpc_id != "" ? { "CreatedFor" = "CA3-Terraform" } : {}
   )
 }
+resource "aws_security_group_rule" "web_ingress_ssh" {
+  type              = "ingress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]  # Ou restrinja para seu IP
+  security_group_id = aws_security_group.web_sg.id
+}
+
+resource "aws_security_group_rule" "web_egress_all" {
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.web_sg.id
+}
 
 resource "aws_security_group_rule" "internal_ingress_vpc_cidr" {
   type              = "ingress"

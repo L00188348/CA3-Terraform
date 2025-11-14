@@ -16,7 +16,7 @@ resource "aws_instance" "web" {
   instance_type = var.instance_type
   subnet_id     = var.subnet_id
   key_name      = var.key_name
-  security_groups = var.security_group_ids
+  vpc_security_group_ids = var.security_group_ids
 
   user_data = <<-EOF
               #!/bin/bash
@@ -24,8 +24,11 @@ resource "aws_instance" "web" {
               yum install -y httpd
               systemctl enable httpd
               systemctl start httpd
-              echo "<h1>Terraform Webserver OK</h1>" > /var/www/html/index.html
+              echo "<h1>Terraform Webserver OK - $(hostname -f)</h1>" > /var/www/html/index.html
               EOF
 
-  tags = { Name = "terraform-webserver" }
+  tags = { 
+    Name = "terraform-webserver",
+    Project = "CA3-Terraform"
+  }
 }
