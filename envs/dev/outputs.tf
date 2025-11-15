@@ -98,3 +98,19 @@ output "deployment_summary" {
     availability_zones = ["us-east-1a", "us-east-1b"]
   }
 }
+
+# ALB Outputs
+output "alb_dns_name" {
+  description = "DNS name of the Application Load Balancer"
+  value       = module.alb.alb_dns_name
+}
+
+output "alb_url" {
+  description = "Full URL to access the application via ALB"
+  value       = module.alb.alb_url
+}
+
+output "alb_arn" {
+  description = "ARN of the Application Load Balancer"
+  value       = module.alb.alb_arn
+}

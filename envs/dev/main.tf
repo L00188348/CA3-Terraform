@@ -51,3 +51,16 @@ module "security" {
   vpc_id           = module.vpc.vpc_id
   vpc_cidr_block   = module.vpc.vpc_cidr_block
 }
+
+# --- módulo ALB ---
+module "alb" {
+  source = "../../modules/alb"
+  
+  vpc_id                 = module.vpc.vpc_id
+  public_subnet_ids      = module.vpc.public_subnet_ids
+  web_instance_ids       = [
+    module.webserver_az1.instance_id,
+    module.webserver_az2.instance_id
+  ]
+  alb_security_group_id = module.security.alb_sg_id
+}
