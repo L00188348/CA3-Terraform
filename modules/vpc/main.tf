@@ -52,3 +52,55 @@ resource "aws_subnet" "private" {
   availability_zone = var.availability_zones[count.index]
   tags              = merge(var.tags, { Name = "Private-${count.index}" })
 }
+
+# --- NAT Gateway Resources ---
+
+# Elastic IPs for NAT Gateways
+resource "aws_eip" "nat" {
+  count = length(var.public_subnets)
+  domain = "vpc"
+  
+  tags = merge(var.tags, { 
+    Name = "NAT-EIP-${count.index}" 
+  })
+}
+
+# NAT Gateways (one in each public subnet)
+resource "aws_nat_gateway" "this" {
+  count         = length(var.public_subnets)
+  allocation_id = aws_eip.nat[count.index].id
+  subnet_id     = aws_subnet.public[count.index].id
+  
+  tags = merge(var.tags, { 
+    Name = "NAT-GW-${count.index}" 
+  })
+  
+  depends_on = [aws_internet_gateway.this]
+}
+
+# Route Table for private subnets
+resource "aws_route_table" "private" {
+  count  = length(var.private_subnets)
+  vpc_id = aws_vpc.this.id
+  
+  tags = merge(var.tags, { 
+    Name = "Private-RT-${count.index}" 
+  })
+}
+
+# Route to the internet via NAT Gateway
+resource "aws_route" "private_nat" {
+  count                  = length(var.private_subnets)
+  route_table_id         = aws_route_table.private[count.index].id
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id         = aws_nat_gateway.this[count.index].id
+  
+  depends_on = [aws_nat_gateway.this]
+}
+
+# Association of private subnets with private route tables
+resource "aws_route_table_association" "private_subnets" {
+  count          = length(var.private_subnets)
+  subnet_id      = aws_subnet.private[count.index].id
+  route_table_id = aws_route_table.private[count.index].id
+}
