@@ -1,20 +1,20 @@
-# Variável para o keypair AWS usado no webserver
+# Variable for the AWS keypair used in the webserver
 variable "key_name" {
-  description = "Nome do keypair AWS para SSH."
+  description = "Name of the AWS keypair for SSH."
   type        = string
-  default     = ""  # substitui pelo nome do teu keypair se tiver
+  default     = ""  
 }
 
-# Variável para definir qual IP pode acessar via SSH
+# Variable to define which IP can access via SSH
 variable "allowed_ssh_cidr" {
-  description = "IP ou range permitido para SSH no Security Group do webserver."
+  description = "IP or range allowed for SSH in the webserver Security Group."
   type        = string
-  default     = "0.0.0.0/0"  # para testes;
+  default     = "0.0.0.0/0"  # for testing;
 }
 
-# referência ao CIDR da VPC
+# reference to the VPC CIDR
 variable "vpc_cidr_block" {
-  description = "CIDR da VPC (usado pelo módulo security)."
+  description = "CIDR of the VPC (used by the security module)."
   type        = string
-  default     = "10.0.0.0/16"  # corresponde à VPC que criaste
+  default     = "10.0.0.0/16"  # corresponds to the VPC you created
 }

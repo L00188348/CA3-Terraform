@@ -1,9 +1,9 @@
 variable "vpc_id" {
-  description = "ID da VPC onde os SGs serão criados"
+  description = "ID of the VPC where security groups will be created"
   type        = string
 }
 
 variable "vpc_cidr_block" {
-  description = "CIDR da VPC (usado para regras internas entre instâncias)"
+  description = "CIDR block of the VPC (used for internal instance communication rules)"
   type        = string
 }

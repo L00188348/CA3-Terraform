@@ -1,5 +1,5 @@
 variable "subnet_id" {
-  description = "ID da subnet pública onde a instância será lançada"
+  description = "ID of the public subnet where instance will be launched"
   type        = string
 }
 
@@ -10,18 +10,19 @@ variable "ami" {
 }
 
 variable "instance_type" {
+  description = "EC2 instance type"
   type    = string
   default = "t3.micro"
 }
 
 variable "key_name" {
-  description = "Nome do key-pair para SSH (opcional)"
+  description = "Name of the key-pair for SSH"
   type        = string
   default     = ""
 }
 
 variable "security_group_ids" {
-  description = "Lista de security group IDs a associar na instância"
+  description = "List of security group IDs to associate with the instance"
   type        = list(string)
   default     = []
 }
