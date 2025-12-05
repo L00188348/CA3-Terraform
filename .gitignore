@@ -1,33 +1,48 @@
-# Terraform files
-.terraform/                # Terraform directory (plugins and cache)
-*.tfstate                  # State files
-*.tfstate.backup           # State backup files
-*.tfvars                   # Sensitive variables
-*.tfstate.*
-tfplan                     # Terraform plan files
-crash.log                  # Terraform crash logs
-override.tf                # Local override files
-override.tf.json           # Local override files in JSON
-*_override.tf              # Local override files
-*_override.tf.json         # Local override files in JSON
-.terraform.lock.hcl        # Lock file
-*.log
-**/.terraform/providers/**/*  # Bloqueia providers em qualquer subpasta
-.envs/dev/                   # Bloqueia pasta envs/dev/ se for local
-.envs/prod/                  # Bloqueia pasta envs/prod/ se for local
+# ===========================================
+# TERRAFORM SPECIFIC IGNORES
+# ===========================================
+.terraform/                # Terraform working directory (plugins, cache)
+*.tfstate                  # Local Terraform state files
+*.tfstate.*                # Backup and temporary state files
+*.tfvars                   # Variable files containing sensitive data
+terraform.tfstate.backup   # Backup copies of state files
+.tfplan                    # Terraform plan output files
+crash.log                  # Terraform crash log files
+override.tf                # Local override configuration files
+override.tf.json           # Local override configuration files (JSON format)
+*_override.tf              # Pattern for override files
+*_override.tf.json         # Pattern for override files in JSON format
+*.log                      # General log files
 
-# Keys and credentials
-*.pem                      # Private keys
-*.key                      # Other private keys
-*.crt                      # Certificates
-*.env                      # Environment files with sensitive variables
+# ===========================================
+# SENSITIVE DATA & CREDENTIALS
+# ===========================================
+*.pem                      # Private key files (SSH, SSL certificates)
+*.key                      # Encryption key files
+*.crt                      # Certificate files
+.env                       # Environment variable files with secrets
+*.secret                   # Files containing secret information
+credentials.tf             # Terraform files containing credentials
 
-# IDE / Editor
-*.swp                      # Vim swap files
-*.swo                      # Vim swap files
-.vscode/                    # VS Code settings
-.idea/                      # IntelliJ/JetBrains settings
+# ===========================================
+# ENVIRONMENT STATE FILES
+# ===========================================
+# Ignore Terraform state and cache files within environment directories
+# but keep the actual Terraform configuration files
+envs/*/.terraform/         # Terraform cache in environment directories
+envs/*/*.tfstate          # State files in environment directories
+envs/*/*.tfstate.*        # State backup files in environment directories
 
-# System
-.DS_Store                  # macOS system file
+# ===========================================
+# IDE / EDITOR CONFIGURATION
+# ===========================================
+.vscode/                   # Visual Studio Code workspace settings
+.idea/                     # JetBrains IDE (IntelliJ, PyCharm) project files
+*.swp                      # Vim swap files (temporary editor files)
+*.swo                      # Vim swap files (additional temporary files)
 
+# ===========================================
+# OPERATING SYSTEM ARTIFACTS
+# ===========================================
+.DS_Store                 # macOS Finder metadata files
+Thumbs.db                 # Windows thumbnail cache files
